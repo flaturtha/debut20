@@ -1,0 +1,17 @@
+  <ul class="next-prev-post list--inline article__meta-buttons">
+  {% if blog.previous_article %}
+    <li>
+      <a href="{{ blog.previous_article }}" class="btn btn-tertiary btn--small"><<<span class="hide-on-mobile"> Previous story</span></a>
+    </li>
+  {% endif %}
+    <li>
+      <a href="{{ blog.url }}" class="btn btn-tertiary btn--small return-link">
+        <span class="hide-on-mobile">Select a Short Story</span><span class="hide-on-big">Short Stories</span>
+      </a>
+    </li>
+  {% if blog.next_article %}
+    <li>
+      <a href="{{ blog.next_article }}" class="btn btn-tertiary btn--small"><span class="hide-on-mobile"> Next story </span>>></a>
+    </li>
+  {% endif %}
+  </ul>

@@ -1,0 +1,28 @@
+<div class="book-meta">
+  <p class="product-single__title">{{ product.title }}</p>
+  {% if product.metafields.c_f.book_subtitle %}
+      <p class="italics">{{ product.metafields.c_f.book_subtitle }}</p>
+  {% endif %}
+
+  {% if product.metafields.c_f.book_also_pub_as %}
+    <p>Also published as <em>{{ product.metafields.c_f.book_also_pub_as }}</em></p>
+  {% endif %}
+
+  {% if product.metafields.c_f.book_author %}
+      <p class="product__author">by {{ product.metafields.c_f.book_author }}</p>
+  {% elsif product.metafields.c_f.book_series %}
+      <p class="product__author">{{ product.metafields.c_f.book_series }}</p>
+  {% endif %}
+
+  {% if product.metafields.c_f.book_author-of %}
+      <p class="product__o_pub" style="font-size:0.875rem;">Author of <span style="font-style:italic;">{{ product.metafields.c_f.book_author-of }}</span></p>
+  {% endif %}
+
+  <p class="product__o_pub"><span style="font-style:italic;">{{ product.metafields.c_f.original_pub_name }}</span><br><span class="font__small italics">First published in {{ product.metafields.c_f.original_pub_date }}.</span>{% if product.metafields.c_f.original_pub_vol %} | Vol. {{ product.metafields.c_f.original_pub_vol }}{% endif %}{% if product.metafields.c_f.original_pub_num %} No. {{ product.metafields.c_f.original_pub_num }}{% endif %}</p>
+
+  <p class="mbin">MBIN: {{ product.metafields.c_f.book_mbin }}</p>
+
+  <p class="pages">
+      {{ product.metafields.c_f.book_wc | divided_by: 400 }} pages<br><span class="font__small">(approximately, depending on book type)</span>.
+  </p>
+</div>

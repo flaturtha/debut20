@@ -1,0 +1,32 @@
+<div class="product-recommendations">
+  <h2 class="section-header text-center upcase">You may also enjoy reading &hellip;</h2>
+  {% comment %} {% include 'relatedblogs' %} {% endcomment %}
+  <div class="recd-prod">
+    {% for product in collections.all.products %}
+
+      {% if article.tags.first == product.tags.first %}
+        <div class="recd-prod__item">
+          <p class="product_type">{{ product.type | upcase }}</p>
+          <a href="{{ product.url }}"><img src="{{ product | img_url: '300x' }}" alt=""></a>
+          <h4>{{ product.title | upcase }}</h4>
+          {% if product.metafields.c_f.book_subtitle %}
+            <h5>{{ product.metafields.c_f.book_subtitle }}</h5>
+          {% endif %}
+          {% if product.metafields.c_f.book_author %}
+            <h5>by {{ product.metafields.c_f.book_author }}</h5>
+          {% else %}
+            <h5>{{ product.metafields.c_f.book_series }}</h5>
+          {% endif %}
+
+          <p>{{ product.metafields.c_f.book_tease }}</p>
+
+          <p class="bold margin1r center">{{ product.price_min | money }} &ndash; {{ product.price_max | money }}</p>
+
+          <a href="{{ product.url }}" class="btn btn-tertiary more-info full-width">More info</a>
+        </div>
+          
+      {% endif %}
+
+    {% endfor %}
+  </div>
+</div>
