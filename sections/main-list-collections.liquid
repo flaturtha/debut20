@@ -1,0 +1,73 @@
+<div class="page-width" data-section-id="{{ section.id }}" data-section-type="list-collections">
+  <header class="section-header text-center">
+    <h1>{{ 'collections.general.catalog_title' | t }}</h1>
+  </header>
+
+  {% paginate collections by 12 %}
+    <div class="grid grid--uniform">
+      {% for collection in collections %}
+        <div class="grid__item small--one-half medium-up--one-third">
+          <div class="collection-grid-item">
+            <a href="{{ collection.url }}" class="collection-grid-item__link">
+              {% if collection.image %}
+                <div class="collection-grid-item__image-wrapper">
+                  <img class="collection-grid-item__image lazyload"
+                    src="{{ collection.image | img_url: '300x300' }}"
+                    data-src="{{ collection.image | img_url: '1000x' }}"
+                    data-widths="[180, 360, 540, 720, 900, 1080, 1296]"
+                    data-aspectratio="{{ collection.image.aspect_ratio }}"
+                    data-sizes="auto"
+                    alt="{{ collection.title | escape }}">
+                </div>
+              {% else %}
+                {% if collection.products.first %}
+                  <div class="collection-grid-item__image-wrapper">
+                    <img class="collection-grid-item__image lazyload"
+                      src="{{ collection.products.first.featured_image | img_url: '300x300' }}"
+                      data-src="{{ collection.products.first.featured_image | img_url: '1000x' }}"
+                      data-widths="[180, 360, 540, 720, 900, 1080, 1296]"
+                      data-aspectratio="{{ collection.products.first.featured_image.aspect_ratio }}"
+                      data-sizes="auto"
+                      alt="{{ collection.title | escape }}">
+                  </div>
+                {% else %}
+                  {% capture current %}{% cycle 1, 2, 3 %}{% endcapture %}
+                  {{ 'collection-' | append: current | placeholder_svg_tag: 'placeholder-svg' }}
+                {% endif %}
+              {% endif %}
+
+              <div class="collection-grid-item__title-wrapper">
+                <h2 class="collection-grid-item__title">{{ collection.title }}</h2>
+              </div>
+            </a>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+
+    {% if paginate.pages > 1 %}
+      {% include 'pagination' %}
+    {% endif %}
+  {% endpaginate %}
+
+  {% for block in section.blocks %}
+    {% case block.type %}
+      {% when '@app' %}
+        {% render block %}
+    {% endcase %}
+  {% endfor %}
+</div>
+
+{% schema %}
+{
+  "name": {
+    "en": "Collection list"
+  },
+  "settings": [],
+  "blocks": [
+    {
+      "type": "@app"
+    }
+  ]
+}
+{% endschema %} 

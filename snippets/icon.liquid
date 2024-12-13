@@ -1,0 +1,5 @@
+{%- if icon != blank -%}
+  <svg class="icon{% if class %} {{ class }}{% endif %}" aria-hidden="true" focusable="false" role="presentation">
+    <use href="#icon-{{ icon }}" />
+  </svg>
+{%- endif -%} 

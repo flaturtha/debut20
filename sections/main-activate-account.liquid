@@ -1,0 +1,54 @@
+<div class="page-width" data-section-id="{{ section.id }}" data-section-type="activate-account">
+  <div class="grid">
+    <div class="grid__item medium-up--one-half medium-up--push-one-quarter">
+      <div class="form-message form-message--error hide" id="ResetError">
+        {{ 'customer.activate_account.error' | t }}
+      </div>
+
+      <div class="form-vertical">
+        {% form 'activate_customer_password' %}
+          <h1>{{ 'customer.activate_account.title' | t }}</h1>
+          <p>{{ 'customer.activate_account.subtext' | t }}</p>
+
+          <label for="CustomerPassword">{{ 'customer.activate_account.password' | t }}</label>
+          <input type="password"
+            name="customer[password]"
+            id="CustomerPassword"
+            class="input-full{% if form.errors contains 'password' %} input--error{% endif %}">
+
+          <label for="CustomerPasswordConfirmation">{{ 'customer.activate_account.password_confirm' | t }}</label>
+          <input type="password"
+            name="customer[password_confirmation]"
+            id="CustomerPasswordConfirmation"
+            class="input-full{% if form.errors contains 'password_confirmation' %} input--error{% endif %}">
+
+          <div class="text-center">
+            <input type="submit" class="btn" value="{{ 'customer.activate_account.submit' | t }}">
+            <input type="submit" class="btn btn--secondary" name="decline" value="{{ 'customer.activate_account.cancel' | t }}">
+          </div>
+        {% endform %}
+      </div>
+    </div>
+  </div>
+
+  {% for block in section.blocks %}
+    {% case block.type %}
+      {% when '@app' %}
+        {% render block %}
+    {% endcase %}
+  {% endfor %}
+</div>
+
+{% schema %}
+{
+  "name": {
+    "en": "Account activation"
+  },
+  "settings": [],
+  "blocks": [
+    {
+      "type": "@app"
+    }
+  ]
+}
+{% endschema %} 

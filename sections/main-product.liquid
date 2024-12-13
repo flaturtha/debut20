@@ -83,7 +83,7 @@
         <div class="thumbnails-wrapper{% if enable_thumbnail_slides == true %} thumbnails-slider--active{% endif %}">
           {% if enable_thumbnail_slides == true %}
             <button type="button" class="btn btn--link medium-up--hide thumbnails-slider__btn thumbnails-slider__prev thumbnails-slider__prev--{{ section.id }}">
-              {% include 'icon-chevron-left' %}
+              {% include 'icon', icon: 'chevron-left' %}
               <span class="icon__fallback-text">{{ 'sections.slideshow.previous_slide' | t }}</span>
             </button>
           {% endif %}
@@ -101,7 +101,7 @@
           </ul>
           {% if enable_thumbnail_slides == true %}
             <button type="button" class="btn btn--link medium-up--hide thumbnails-slider__btn thumbnails-slider__next thumbnails-slider__next--{{ section.id }}">
-              {% include 'icon-chevron-right' %}
+              {% include 'icon', icon: 'chevron-right' %}
               <span class="icon__fallback-text">{{ 'sections.slideshow.next_slide' | t }}</span>
             </button>
           {% endif %}
@@ -202,7 +202,7 @@
             {% endif %}
 
             <div class="product-form__error-message-wrapper product-form__error-message-wrapper--hidden" data-error-message-wrapper role="alert">
-              {% include 'icon-error' %} <span class="product-form__error-message" data-error-message>{{ 'products.product.quantity_minimum_message' | t }}</span>
+              {% include 'icon', icon: 'error' %} <span class="product-form__error-message" data-error-message>{{ 'products.product.quantity_minimum_message' | t }}</span>
             </div>
 
             <div class="product-form__item product-form__item--submit{% if section.settings.enable_payment_button %} product-form__item--payment-button{% endif %}{% if product.has_only_default_variant %} product-form__item--no-variants{% endif %}">
@@ -219,7 +219,7 @@
                   {% endunless %}
                 </span>
                 <span class="hide" data-loader>
-                  {% render 'icon-spinner' %}
+                  {% include 'icon', icon: 'spinner' %}
                 </span>
               </button>
               {% if section.settings.enable_payment_button %}
@@ -249,57 +249,10 @@
           aria-hidden="true"
         >{{ 'products.product.loader_label' | t }}</p>
 
-        {% if section.settings.show_share_buttons %}
-          {% render 'social-sharing', share_title: product.title, share_permalink: product.url, share_image: product %}
-        {% endif %}
-    </div>
-  </div>
-
-  <hr class="hide-on-big">
-
-  <div id="tab-section">
-    <ul class="tabs">
-      {% for block in section.blocks %}
-        {% if block.type == 'tab' %}
-          <li><a href="#tab-{{ block.id }}">{{ block.settings.title }}</a></li>
-        {% endif %}
-      {% endfor %}
-    </ul>
-
-    {% for block in section.blocks %}
-      {% if block.type == 'tab' %}
-        <div id="tab-{{ block.id }}">
-          {% case block.settings.content_type %}
-            {% when 'description' %}
-              {{ product.description }}
-            {% when 'meta' %}
-              {% render 'book-meta' %}
-            {% when 'shipping' %}
-              {% render 'book-shipping' %}
-          {% endcase %}
-        </div>
-      {% endif %}
-    {% endfor %}
-  </div>
-
-  <hr>
-
-  <div id="shopify-product-reviews" data-id="{{product.id}}">{{ product.metafields.spr.reviews }}</div>
-
-
-</div>
-
-{% unless product == empty %}
-  <script type="application/json" id="ProductJson-{{ section.id }}">
-    {{ product | json }}
-  </script>
-{% endunless %}
-
-
-
 {% schema %}
 {
   "name": {
+    "de": "Produktseiten",
     "en": "Product pages"
   },
   "settings": [
@@ -307,30 +260,35 @@
       "type": "select",
       "id": "image_size",
       "label": {
+        "de": "Bildgröße",
         "en": "Image size"
       },
       "options": [
         {
           "value": "small",
           "label": {
+            "de": "Klein",
             "en": "Small"
           }
         },
         {
           "value": "medium",
           "label": {
+            "de": "Mittel",
             "en": "Medium"
           }
         },
         {
           "value": "large",
           "label": {
+            "de": "Groß",
             "en": "Large"
           }
         },
         {
           "value": "full",
           "label": {
+            "de": "Volle Breite",
             "en": "Full-width"
           }
         }
@@ -339,32 +297,9 @@
     },
     {
       "type": "checkbox",
-      "id": "show_quantity_selector",
-      "label": {
-        "en": "Show quantity selector"
-      },
-      "default": false
-    },
-    {
-      "type": "checkbox",
-      "id": "show_variant_labels",
-      "label": {
-        "en": "Show variant labels"
-      },
-      "default": true
-    },
-    {
-      "type": "checkbox",
-      "id": "show_vendor",
-      "label": {
-        "en": "Show vendor"
-      },
-      "default": false
-    },
-    {
-      "type": "checkbox",
       "id": "enable_zoom",
       "label": {
+        "de": "Zoom-Funktion für Bilder aktivieren",
         "en": "Enable image zoom"
       },
       "default": true
@@ -373,18 +308,30 @@
       "type": "checkbox",
       "id": "enable_payment_button",
       "label": {
+        "de": "Dynamischen Checkout Button anzeigen",
         "en": "Show dynamic checkout button"
       },
       "info": {
+        "de": "Jeder Kunde sieht die Zahlungsmethode, die er am ehesten bevorzugt wie PayPal oder Apple Pay. [Mehr Infos](https://help.shopify.com/manual/using-themes/change-the-layout/dynamic-checkout)",
         "en": "Each customer will see their preferred payment method from those available on your store, such as PayPal or Apple Pay. [Learn more](https://help.shopify.com/manual/using-themes/change-the-layout/dynamic-checkout)"
       },
       "default": true
     },
     {
       "type": "checkbox",
-      "id": "show_share_buttons",
+      "id": "show_quantity_selector",
       "label": {
-        "en": "Show social sharing buttons"
+        "de": "Mengenauswahl anzeigen",
+        "en": "Show quantity selector"
+      },
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_variant_labels",
+      "label": {
+        "de": "Variantenbezeichnungen anzeigen",
+        "en": "Show variant labels"
       },
       "default": true
     }
@@ -392,39 +339,7 @@
   "blocks": [
     {
       "type": "@app"
-    },
-    {
-      "type": "tab",
-      "name": "Content Tab",
-      "settings": [
-        {
-          "type": "text",
-          "id": "title",
-          "label": "Tab Title",
-          "default": "Tab"
-        },
-        {
-          "type": "select",
-          "id": "content_type",
-          "label": "Content Type",
-          "options": [
-            {
-              "value": "description",
-              "label": "Product Description"
-            },
-            {
-              "value": "meta",
-              "label": "Book Details"
-            },
-            {
-              "value": "shipping",
-              "label": "Shipping Info"
-            }
-          ]
-        }
-      ]
     }
-  ],
-  "presets": []
+  ]
 }
-{% endschema %}
+{% endschema %} 

@@ -1,0 +1,69 @@
+<div class="page-width" data-section-id="{{ section.id }}" data-section-type="customer-login">
+  <div class="grid">
+    <div class="grid__item medium-up--one-half medium-up--push-one-quarter">
+      <div class="form-message form-message--error hide" id="LoginError">
+        {{ 'customer.login.errors.invalid' | t }}
+      </div>
+
+      <div class="form-vertical">
+        {% form 'customer_login' %}
+          <h1>{{ 'customer.login.title' | t }}</h1>
+
+          <label for="CustomerEmail">{{ 'customer.login.email' | t }}</label>
+          <input type="email"
+            name="customer[email]"
+            id="CustomerEmail"
+            class="input-full{% if form.errors contains 'email' %} input--error{% endif %}"
+            autocorrect="off"
+            autocapitalize="off"
+            autofocus>
+
+          {% if form.password_needed %}
+            <label for="CustomerPassword">{{ 'customer.login.password' | t }}</label>
+            <input type="password"
+              name="customer[password]"
+              id="CustomerPassword"
+              class="input-full{% if form.errors contains 'password' %} input--error{% endif %}">
+          {% endif %}
+
+          <p>
+            <a href="{{ routes.account_register_url }}">{{ 'customer.login.create_account' | t }}</a>
+          </p>
+
+          {% if form.password_needed %}
+            <p>
+              <a href="{{ routes.account_recover_url }}">{{ 'customer.login.forgot_password' | t }}</a>
+            </p>
+          {% endif %}
+
+          <input type="submit" class="btn" value="{{ 'customer.login.sign_in' | t }}">
+
+          {% if form.password_needed %}
+            <input type="hidden" name="checkout_url" value="{{ routes.root_url }}">
+          {% endif %}
+        {% endform %}
+      </div>
+    </div>
+  </div>
+
+  {% for block in section.blocks %}
+    {% case block.type %}
+      {% when '@app' %}
+        {% render block %}
+    {% endcase %}
+  {% endfor %}
+</div>
+
+{% schema %}
+{
+  "name": {
+    "en": "Customer login"
+  },
+  "settings": [],
+  "blocks": [
+    {
+      "type": "@app"
+    }
+  ]
+}
+{% endschema %} 
